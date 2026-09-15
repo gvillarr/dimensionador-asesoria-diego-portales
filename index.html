@@ -65,6 +65,13 @@
   .kv div{padding:8px 10px;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px}
   .kv small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
   .kv b{font-family:var(--serif);font-weight:500;font-size:clamp(16px,2vw,19px);color:var(--navy-2);white-space:nowrap}
+  .items{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 12px;position:relative}
+  .items th{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;text-align:left;padding:4px 6px;border-bottom:1px solid var(--navy)}
+  .items td{padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink)}
+  .items th:nth-child(n+2),.items td:nth-child(n+2){text-align:right;white-space:nowrap;width:64px}
+  .items tr.grp td{font-family:var(--serif);font-size:13.5px;color:var(--navy);padding-top:9px;border-bottom:1px solid var(--navy);text-align:left}
+  .items tfoot td{font-weight:700;color:var(--navy-2);border-bottom:0;border-top:1.5px solid var(--navy);font-family:var(--serif);font-size:14px}
+  .level .kv{margin-top:2px}
   .note{padding:0 24px 22px;font-size:13px;color:var(--ink-2);line-height:1.45}
 
   /* Simulador */
@@ -151,12 +158,23 @@
     <section class="card presented" aria-labelledby="h-presented">
       <div class="hd">
         <h2 id="h-presented">Propuesta presentada</h2>
-        <p class="sub">Los dos presupuestos del documento. Cursos de implementación: 5° básico, 7° básico y I° medio, uno por docente.</p>
+        <p class="sub">Lo entregado en cada presupuesto del documento, con sus horas.</p>
       </div>
       <div class="levels">
         <article class="level">
-          <h3>Sin codocencia <span class="tag">Nivel Básico</span></h3>
-          <p class="spec">3 docentes · talleres, rutas de aprendizaje, informes</p>
+          <h3>Propuesta 1 · Sin codocencia <span class="tag">Nivel Básico</span></h3>
+          <p class="spec">3 docentes · cursos de implementación 5° básico, 7° básico y I° medio</p>
+          <table class="items">
+            <thead><tr><th>Ítem</th><th>Cantidad</th><th>Horas</th></tr></thead>
+            <tbody>
+              <tr><td>Coordinación con equipo directivo / UTP (reunión inicial, seguimientos y cierre)</td><td>4</td><td>6,5</td></tr>
+              <tr><td>Talleres de formación didáctica (COPISI, Polya, cálculo mental, TSD, diseño de tareas, cierre)</td><td>6</td><td>12,0</td></tr>
+              <tr><td>Rutas de aprendizaje con tareas matemáticas, una por curso</td><td>3</td><td>6,0</td></tr>
+              <tr><td>Retroalimentación y ajuste de las rutas según resultados DIA</td><td>3</td><td>3,0</td></tr>
+              <tr><td>Informes de avance (noviembre) y final (diciembre)</td><td>2</td><td>4,0</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total de horas</td><td></td><td>31,5</td></tr></tfoot>
+          </table>
           <div class="kv">
             <div><small>Horas</small><b id="pA-h">—</b></div>
             <div><small>UF</small><b id="pA-uf">—</b></div>
@@ -164,8 +182,27 @@
           </div>
         </article>
         <article class="level">
-          <h3>Con codocencia <span class="tag">Nivel Intermedio</span></h3>
-          <p class="spec">3 docentes · lo anterior + 1 ciclo de codocencia por docente, con material didáctico y retroalimentación</p>
+          <h3>Propuesta 2 · Con codocencia <span class="tag">Nivel Intermedio</span></h3>
+          <p class="spec">3 docentes · lo anterior + un ciclo de codocencia por docente, con material didáctico y retroalimentación</p>
+          <table class="items">
+            <thead><tr><th>Ítem</th><th>Cantidad</th><th>Horas</th></tr></thead>
+            <tbody>
+              <tr class="grp"><td colspan="3">Formación, planificación e informes</td></tr>
+              <tr><td>Coordinación con equipo directivo / UTP</td><td>4</td><td>6,5</td></tr>
+              <tr><td>Talleres de formación didáctica</td><td>6</td><td>12,0</td></tr>
+              <tr><td>Rutas de aprendizaje, una por curso</td><td>3</td><td>6,0</td></tr>
+              <tr><td>Retroalimentación y ajuste de las rutas según DIA</td><td>3</td><td>3,0</td></tr>
+              <tr><td>Informes de avance y final</td><td>2</td><td>4,0</td></tr>
+              <tr class="grp"><td colspan="3">Codocencia · un ciclo por docente</td></tr>
+              <tr><td>Reunión de planificación de la clase</td><td>3</td><td>4,5</td></tr>
+              <tr><td>Retroalimentación de la primera versión de la tarea</td><td>3</td><td>4,5</td></tr>
+              <tr><td>Retroalimentación de la segunda versión de la tarea</td><td>3</td><td>3,0</td></tr>
+              <tr><td>Implementación y observación conjunta en aula</td><td>3</td><td>6,0</td></tr>
+              <tr><td>Retroalimentación posterior (incluye preparación)</td><td>3</td><td>13,5</td></tr>
+              <tr><td>Material didáctico concreto, pictórico y simbólico, uno por curso</td><td>3</td><td>12,0</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total de horas</td><td></td><td>75,0</td></tr></tfoot>
+          </table>
           <div class="kv">
             <div><small>Horas</small><b id="pB-h">—</b></div>
             <div><small>UF</small><b id="pB-uf">—</b></div>
