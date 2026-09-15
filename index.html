@@ -59,10 +59,11 @@
   .level::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(200,134,43,.18),transparent 70%)}
   .level h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--navy)}
   .level .spec{font-size:13px;color:var(--ink-2);margin:2px 0 12px}
-  .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .kv{display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:8px}
+  @media (max-width:440px){.kv{grid-template-columns:1fr 1fr}.kv div:last-child{grid-column:1/-1}}
   .kv div{padding:8px 10px;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px}
   .kv small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
-  .kv b{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--navy-2);white-space:nowrap}
+  .kv b{font-family:var(--serif);font-weight:500;font-size:clamp(16px,2vw,19px);color:var(--navy-2);white-space:nowrap}
   .note{padding:0 24px 22px;font-size:13px;color:var(--ink-2);line-height:1.45}
 
   /* Simulador */
