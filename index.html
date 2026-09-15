@@ -43,7 +43,7 @@
   }
   .uf-badge b{display:block;font-family:var(--serif);font-size:22px;color:var(--navy);font-weight:500}
 
-  .grid{display:grid;grid-template-columns:5fr 7fr;gap:26px;align-items:start}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
   @media (max-width:860px){.grid{grid-template-columns:1fr}header{grid-template-columns:1fr}.uf-badge{text-align:left;border-left:0;padding-left:0;border-top:2px solid var(--ochre);padding-top:10px}}
 
   .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);animation:rise .7s both}
@@ -54,8 +54,8 @@
   .card .sub{margin:4px 0 0;color:var(--ink-2);font-size:14px}
 
   /* Propuesta presentada */
-  .levels{padding:16px 24px 24px;display:grid;gap:14px}
-  .level{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:linear-gradient(180deg,#fff,var(--paper-2) 160%);position:relative;overflow:hidden}
+  .levels{padding:16px 18px 20px;display:grid;gap:14px}
+  .level{border:1px solid var(--line);border-radius:10px;padding:14px 14px;background:linear-gradient(180deg,#fff,var(--paper-2) 160%);position:relative;overflow:hidden}
   .level::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(200,134,43,.18),transparent 70%)}
   .level h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--navy);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .tag{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre-2);border:1px solid var(--ochre);border-radius:999px;padding:1px 8px;font-weight:600}
@@ -371,7 +371,7 @@
     $('ufValue').textContent = fmtCLP(u).replace('$','$ ');
     $('ufDate').textContent =
       (P.uf && P.uf>0) ? 'fijado por el oferente' :
-      (ufLive ? `UF del ${ufLive.fecha} · Banco Central vía mindicador.cl` : (ufFailed ? `UF del ${UF_FALLBACK.fecha} · no se pudo actualizar en línea` : `UF del ${UF_FALLBACK.fecha} · actualizando…`));
+      (ufLive ? `UF del ${ufLive.fecha} · ${ufLive.fuente}` : (ufFailed ? `UF del ${UF_FALLBACK.fecha} · sin conexión a la fuente` : `UF del ${UF_FALLBACK.fecha} · actualizando…`));
   }
 
   // ---- Controles del colegio ----
@@ -412,12 +412,21 @@
 
   function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); }
 
-  // ---- UF del día ----
+  // ---- UF del día: uf.json (actualizado a diario por GitHub Actions) y, si responde, mindicador.cl en línea ----
   render();
+  const toDMY = iso => iso.slice(0,10).split('-').reverse().join('-');
+  const useUF = (valor, fechaISO, fuente) => {
+    if (!(valor > 1000)) return;
+    if (!ufLive || fechaISO >= ufLive.iso) { ufLive = { valor, iso: fechaISO, fecha: toDMY(fechaISO), fuente }; render(); }
+  };
+  fetch('uf.json', {cache:'no-store'})
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(j => useUF(+j.valor, j.fecha, 'Banco Central vía mindicador.cl'))
+    .catch(() => {});
   const ac = new AbortController(); const tm = setTimeout(() => ac.abort(), 8000);
   fetch('https://mindicador.cl/api/uf', {cache:'no-store', signal:ac.signal})
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(j => { const s = j && j.serie && j.serie[0]; if (s && s.valor > 0) { ufLive = { valor:s.valor, fecha:s.fecha.slice(0,10).split('-').reverse().join('-') }; } else { ufFailed = true; } })
+    .then(j => { const s = j && j.serie && j.serie[0]; if (s && s.valor > 0) useUF(+s.valor, s.fecha, 'Banco Central vía mindicador.cl'); else ufFailed = true; })
     .catch(() => { ufFailed = true; })
     .finally(() => { clearTimeout(tm); render(); });
 })();
