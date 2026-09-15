@@ -158,7 +158,7 @@
 
     <section class="card p2" aria-labelledby="h-p2">
       <div class="hd"><h2 id="h-p2">Propuesta 2 · Con codocencia</h2><span class="tag">Nivel Intermedio</span></div>
-      <p class="sub">Todo lo de la Propuesta 1 más un ciclo de codocencia por docente, con material didáctico y retroalimentación. <b>Propuesta</b>: 3 docentes, 1 ciclo.</p>
+      <p class="sub" id="subP2"></p>
       <table class="items" id="t2"></table>
     </section>
   </div>
@@ -287,6 +287,9 @@
     const parts = [`${D} docente${D!==1?'s':''} · ${D} curso${D!==1?'s':''} de implementación`,
                    C===0 ? 'sin codocencia' : `${DC} clase${DC>1?'s':''} observada${DC>1?'s':''} · ${M} material${M>1?'es':''}`];
     parts.forEach((t,i) => { if (i) s.append(document.createTextNode(' · ')); s.append(el('b', null, t)); });
+    $('subP2').textContent = C === 0
+      ? `Todo lo de la Propuesta 1, sin codocencia en su proyecto (${D} docente${D!==1?'s':''}). El documento considera 3 docentes con 1 ciclo cada una.`
+      : `Todo lo de la Propuesta 1 más ${C} ciclo${C>1?'s':''} de codocencia por docente (${D} docente${D!==1?'s':''}, ${D*C} clase${D*C>1?'s':''} observada${D*C>1?'s':''}), con material didáctico y retroalimentación. El documento considera 3 docentes con 1 ciclo cada una.`;
     const u = ufActual();
     $('ufValue').textContent = fmtCLP(u).replace('$','$ ');
     $('ufDate').textContent = (P.uf && P.uf>0) ? 'fijado por el oferente'
