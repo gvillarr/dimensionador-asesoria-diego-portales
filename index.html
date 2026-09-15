@@ -69,6 +69,7 @@
   .items td{padding:5px 8px 5px 16px;border-bottom:1px solid var(--line);vertical-align:top}
   .items tr.grp td{font-family:var(--serif);font-size:13px;color:var(--navy);padding-top:8px;border-bottom:1px solid var(--navy);background:transparent}
   .items td.zero{color:#9aa4ad}
+  .items.off tfoot tr.money td.you{color:#8fa0ad}
   .items tfoot td{border-bottom:0;padding:6px 8px 6px 16px}
   .items tfoot tr.h td{font-weight:700;border-top:1.5px solid var(--navy);font-family:var(--serif);font-size:14px;color:var(--navy-2)}
   .items tfoot tr.money td{background:var(--navy);color:#fff;font-family:var(--serif);font-size:15px}
@@ -261,18 +262,19 @@
     if (td.textContent !== txt) { td.textContent = txt; td.classList.remove('pulse'); void td.offsetWidth; td.classList.add('pulse'); }
     td.classList.toggle('zero', !!zero);
   }
-  function fillTable(table, items, refD, refC, D, C){
+  // off = la propuesta no aplica al proyecto elegido (Propuesta 2 con 0 ciclos): toda su columna queda en 0.
+  function fillTable(table, items, refD, refC, D, C, off){
     items.forEach(it => {
       const tr = table.querySelector(`tr[data-id="${it.id}"]`);
-      const hr = hoursOf(it, refD, refC), hy = hoursOf(it, D, C);
+      const hr = hoursOf(it, refD, refC), hy = off ? 0 : hoursOf(it, D, C);
       setCell(tr.children[1], fmtH(hr) + ' h');
       setCell(tr.children[2], fmtH(hy) + ' h', hy === 0);
     });
-    const tr = totals(items, refD, refC), ty = totals(items, D, C);
+    const tr = totals(items, refD, refC), ty = off ? { horas:0, uf:0, clp:0 } : totals(items, D, C);
     const f = table.tFoot.rows;
-    setCell(f[0].cells[1], fmtH(tr.horas) + ' h'); setCell(f[0].cells[2], fmtH(ty.horas) + ' h');
-    setCell(f[1].cells[1], fmtUF(tr.uf) + ' UF'); setCell(f[1].cells[2], fmtUF(ty.uf) + ' UF');
-    setCell(f[2].cells[1], fmtCLP(tr.clp));       setCell(f[2].cells[2], fmtCLP(ty.clp));
+    setCell(f[0].cells[1], fmtH(tr.horas) + ' h'); setCell(f[0].cells[2], fmtH(ty.horas) + ' h', off);
+    setCell(f[1].cells[1], fmtUF(tr.uf) + ' UF'); setCell(f[1].cells[2], fmtUF(ty.uf) + ' UF', off);
+    setCell(f[2].cells[1], fmtCLP(tr.clp));       setCell(f[2].cells[2], fmtCLP(ty.clp), off);
     table.tHead.rows[0].cells[2].textContent = `Su proyecto · ${D} doc.` + (items === P2 ? ` · ${C} ciclo${C!==1?'s':''}` : '');
   }
 
@@ -280,15 +282,16 @@
 
   function render(){
     const D = clamp($('inD')), C = clamp($('inC'));
-    fillTable($('t1'), P1, 3, 0, D, 0);
-    fillTable($('t2'), P2, 3, 1, D, C);
+    fillTable($('t1'), P1, 3, 0, D, 0, false);
+    fillTable($('t2'), P2, 3, 1, D, C, C === 0);
     const s = $('rSum'); s.textContent = '';
     const DC = D*C, M = C>0 ? D : 0;
     const parts = [`${D} docente${D!==1?'s':''} · ${D} curso${D!==1?'s':''} de implementación`,
                    C===0 ? 'sin codocencia' : `${DC} clase${DC>1?'s':''} observada${DC>1?'s':''} · ${M} material${M>1?'es':''}`];
     parts.forEach((t,i) => { if (i) s.append(document.createTextNode(' · ')); s.append(el('b', null, t)); });
+    $('t2').classList.toggle('off', C === 0);
     $('subP2').textContent = C === 0
-      ? `Todo lo de la Propuesta 1, sin codocencia en su proyecto (${D} docente${D!==1?'s':''}). El documento considera 3 docentes con 1 ciclo cada una.`
+      ? `Con 0 ciclos de codocencia esta propuesta no aplica: su proyecto es la Propuesta 1 (${D} docente${D!==1?'s':''}). El documento considera 3 docentes con 1 ciclo cada una.`
       : `Todo lo de la Propuesta 1 más ${C} ciclo${C>1?'s':''} de codocencia por docente (${D} docente${D!==1?'s':''}, ${D*C} clase${D*C>1?'s':''} observada${D*C>1?'s':''}), con material didáctico y retroalimentación. El documento considera 3 docentes con 1 ciclo cada una.`;
     const u = ufActual();
     $('ufValue').textContent = fmtCLP(u).replace('$','$ ');
