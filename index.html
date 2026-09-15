@@ -57,7 +57,8 @@
   .levels{padding:16px 24px 24px;display:grid;gap:14px}
   .level{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:linear-gradient(180deg,#fff,var(--paper-2) 160%);position:relative;overflow:hidden}
   .level::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(200,134,43,.18),transparent 70%)}
-  .level h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--navy)}
+  .level h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--navy);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tag{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre-2);border:1px solid var(--ochre);border-radius:999px;padding:1px 8px;font-weight:600}
   .level .spec{font-size:13px;color:var(--ink-2);margin:2px 0 12px}
   .kv{display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:8px}
   @media (max-width:440px){.kv{grid-template-columns:1fr 1fr}.kv div:last-child{grid-column:1/-1}}
@@ -67,23 +68,20 @@
   .note{padding:0 24px 22px;font-size:13px;color:var(--ink-2);line-height:1.45}
 
   /* Simulador */
-  .controls{padding:18px 24px 6px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media (max-width:640px){.controls{grid-template-columns:1fr}}
-  .seg{margin:0;padding:12px 14px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);display:grid;gap:10px}
-  .seg legend{font-family:var(--serif);font-size:17px;color:var(--navy-2);padding:0 6px}
-  .seg legend span{font-family:var(--sans);font-size:12px;color:var(--ink-2);margin-left:6px}
-  .ctl-help{grid-column:1/-1;margin:0;font-size:13px;color:var(--ink-2)}
-  .ctl{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--white)}
-  .ctl label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600;margin-bottom:4px}
+  .controls{padding:18px 24px 6px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:520px){.controls{grid-template-columns:1fr}}
+  .ctl{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--paper)}
+  .ctl label{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+  .ctl .desc{font-size:13px;color:var(--ink-2);margin:2px 0 10px;min-height:3.9em}
   .stepper{display:flex;align-items:center;gap:10px}
   .stepper button{
-    width:36px;height:36px;border-radius:50%;border:1.5px solid var(--navy);background:var(--white);color:var(--navy);
+    width:42px;height:42px;border-radius:50%;border:1.5px solid var(--navy);background:var(--white);color:var(--navy);
     font-size:22px;line-height:1;cursor:pointer;transition:transform .12s,background .12s,color .12s;font-family:var(--sans)
   }
   .stepper button:hover{background:var(--navy);color:#fff;transform:scale(1.06)}
   .stepper button:active{transform:scale(.96)}
   .stepper input{
-    flex:1;text-align:center;font-family:var(--serif);font-size:34px;font-weight:400;color:var(--navy-2);
+    flex:1;text-align:center;font-family:var(--serif);font-size:40px;font-weight:400;color:var(--navy-2);
     border:0;background:transparent;width:100%;min-width:0;outline:none;font-variation-settings:"opsz" 96
   }
   .stepper input:focus{box-shadow:inset 0 -2px 0 var(--ochre)}
@@ -138,7 +136,7 @@
     <div>
       <p class="kicker">Colegio Diego Portales · Machalí · Asesoría en matemática 2026</p>
       <h1>Dimensione su <em>proyecto</em> de acompañamiento</h1>
-      <p class="lead">Los montos de la propuesta son referenciales. Cambie el número de docentes participantes y los ciclos de codocencia por docente: las horas y el valor del proyecto completo se recalculan al instante.</p>
+      <p class="lead">Los montos de la propuesta son referenciales. Elija cuántas docentes participan y si el acompañamiento incluye codocencia: las horas y el valor del proyecto completo se recalculan al instante.</p>
     </div>
     <div class="uf-badge" id="ufBadge">
       <span>Valor UF de referencia</span>
@@ -153,12 +151,12 @@
     <section class="card presented" aria-labelledby="h-presented">
       <div class="hd">
         <h2 id="h-presented">Propuesta presentada</h2>
-        <p class="sub">Los dos niveles tal como figuran en el documento.</p>
+        <p class="sub">Los dos presupuestos del documento. Cursos de implementación: 5° básico, 7° básico y I° medio, uno por docente.</p>
       </div>
       <div class="levels">
         <article class="level">
-          <h3>Nivel Básico</h3>
-          <p class="spec">2 docentes de básica + 1 de media · sin codocencia</p>
+          <h3>Sin codocencia <span class="tag">Nivel Básico</span></h3>
+          <p class="spec">3 docentes · talleres, rutas de aprendizaje, informes</p>
           <div class="kv">
             <div><small>Horas</small><b id="pA-h">—</b></div>
             <div><small>UF</small><b id="pA-uf">—</b></div>
@@ -166,8 +164,8 @@
           </div>
         </article>
         <article class="level">
-          <h3>Nivel Intermedio</h3>
-          <p class="spec">2 docentes de básica + 1 de media · 1 ciclo de codocencia por docente · materiales</p>
+          <h3>Con codocencia <span class="tag">Nivel Intermedio</span></h3>
+          <p class="spec">3 docentes · lo anterior + 1 ciclo de codocencia por docente, con material didáctico y retroalimentación</p>
           <div class="kv">
             <div><small>Horas</small><b id="pB-h">—</b></div>
             <div><small>UF</small><b id="pB-uf">—</b></div>
@@ -175,56 +173,35 @@
           </div>
         </article>
       </div>
-      <p class="note">Un ciclo de codocencia comprende, para cada docente: planificación conjunta de la clase, retroalimentación de dos versiones de la tarea, implementación observada en aula y retroalimentación posterior.</p>
+      <p class="note">Las rutas y materiales se elaboran para un curso por docente (5° básico, 7° básico y I° medio). La extrapolación a los demás cursos de cada docente la realizan las propias docentes con lo elaborado, sin costo adicional.</p>
     </section>
 
     <!-- Simulador -->
     <section class="card sim" aria-labelledby="h-sim">
       <div class="hd">
         <h2 id="h-sim">Su proyecto</h2>
-        <p class="sub">Docentes y ciclos de codocencia, por nivel. Todo lo demás se deriva de la propuesta.</p>
+        <p class="sub">Dos decisiones: cuántas docentes y si hay codocencia. Todo lo demás se deriva de la propuesta.</p>
       </div>
 
       <div class="controls">
-        <fieldset class="seg">
-          <legend>Educación Básica <span>5° a 8°</span></legend>
-          <div class="ctl">
-            <label for="inDb">Docentes</label>
-            <div class="stepper">
-              <button type="button" data-step="Db" data-dir="-1" aria-label="Menos docentes de básica">−</button>
-              <input id="inDb" type="number" inputmode="numeric" min="0" max="12" step="1" value="2" aria-label="Docentes de básica">
-              <button type="button" data-step="Db" data-dir="1" aria-label="Más docentes de básica">+</button>
-            </div>
+        <div class="ctl">
+          <label for="inD">Docentes participantes</label>
+          <p class="desc">Cada docente implementa en un curso. En la propuesta: 5° básico, 7° básico y I° medio.</p>
+          <div class="stepper">
+            <button type="button" data-step="D" data-dir="-1" aria-label="Menos docentes">−</button>
+            <input id="inD" type="number" inputmode="numeric" min="1" max="12" step="1" value="3" aria-label="Número de docentes">
+            <button type="button" data-step="D" data-dir="1" aria-label="Más docentes">+</button>
           </div>
-          <div class="ctl">
-            <label for="inCb">Ciclos de codocencia por docente</label>
-            <div class="stepper">
-              <button type="button" data-step="Cb" data-dir="-1" aria-label="Menos ciclos en básica">−</button>
-              <input id="inCb" type="number" inputmode="numeric" min="0" max="6" step="1" value="1" aria-label="Ciclos por docente en básica">
-              <button type="button" data-step="Cb" data-dir="1" aria-label="Más ciclos en básica">+</button>
-            </div>
+        </div>
+        <div class="ctl">
+          <label for="inC">Ciclos de codocencia por docente</label>
+          <p class="desc">0 = presupuesto sin codocencia. Cada ciclo incluye planificación, material didáctico, clase observada y retroalimentación.</p>
+          <div class="stepper">
+            <button type="button" data-step="C" data-dir="-1" aria-label="Menos ciclos">−</button>
+            <input id="inC" type="number" inputmode="numeric" min="0" max="6" step="1" value="1" aria-label="Ciclos por docente">
+            <button type="button" data-step="C" data-dir="1" aria-label="Más ciclos">+</button>
           </div>
-        </fieldset>
-        <fieldset class="seg">
-          <legend>Enseñanza Media <span>I° a IV°</span></legend>
-          <div class="ctl">
-            <label for="inDm">Docentes</label>
-            <div class="stepper">
-              <button type="button" data-step="Dm" data-dir="-1" aria-label="Menos docentes de media">−</button>
-              <input id="inDm" type="number" inputmode="numeric" min="0" max="12" step="1" value="1" aria-label="Docentes de media">
-              <button type="button" data-step="Dm" data-dir="1" aria-label="Más docentes de media">+</button>
-            </div>
-          </div>
-          <div class="ctl">
-            <label for="inCm">Ciclos de codocencia por docente</label>
-            <div class="stepper">
-              <button type="button" data-step="Cm" data-dir="-1" aria-label="Menos ciclos en media">−</button>
-              <input id="inCm" type="number" inputmode="numeric" min="0" max="6" step="1" value="1" aria-label="Ciclos por docente en media">
-              <button type="button" data-step="Cm" data-dir="1" aria-label="Más ciclos en media">+</button>
-            </div>
-          </div>
-        </fieldset>
-        <p class="ctl-help">Un ciclo de codocencia = una clase observada por docente, con su planificación, dos retroalimentaciones de la tarea y retroalimentación posterior. 0 ciclos = sin acompañamiento en aula.</p>
+        </div>
       </div>
 
       <div class="results" aria-live="polite">
@@ -263,8 +240,7 @@
         <div class="param"><label for="pHD">Horas por docente (ruta de aprendizaje y ajuste)</label><input id="pHD" type="number" step="0.5" min="0" data-key="hd"></div>
         <div class="param"><label for="pHCF">Horas por ciclo fuera del aula (planificación y retroalimentaciones)</label><input id="pHCF" type="number" step="0.5" min="0" data-key="hcf"></div>
         <div class="param"><label for="pHCA">Horas por ciclo en aula (implementación observada)</label><input id="pHCA" type="number" step="0.5" min="0" data-key="hca"></div>
-        <div class="param"><label for="pHM">Horas por material didáctico (uno por docente con codocencia)</label><input id="pHM" type="number" step="0.5" min="0" data-key="hm"></div>
-        <div class="param check"><input id="pMAT" type="checkbox" data-key="mat"><label for="pMAT">Incluir materiales cuando hay codocencia</label></div>
+        <div class="param"><label for="pHM">Horas de material didáctico por docente con codocencia</label><input id="pHM" type="number" step="0.5" min="0" data-key="hm"></div>
       </div>
       <div class="actions">
         <button class="btn" id="btnLink" type="button">Generar enlace para el colegio</button>
@@ -280,7 +256,7 @@
 <script>
 (function(){
   // ---- Modelo (valores de la propuesta, sept. 2026) ----
-  const DEFAULTS = { uf:null, tf:1.5, ta:2.0, hb:22.5, hd:3.0, hcf:8.5, hca:2.0, hm:4.0, mat:1 };
+  const DEFAULTS = { uf:null, tf:1.5, ta:2.0, hb:22.5, hd:3.0, hcf:8.5, hca:2.0, hm:4.0 };
   const UF_FALLBACK = { valor:40934.58, fecha:'15-09-2026' }; // mindicador.cl
   const P = {...DEFAULTS};
   let ufLive = null, ufFailed = false;
@@ -290,7 +266,8 @@
   for (const k of Object.keys(DEFAULTS)) {
     if (q.has(k)) { const v = parseFloat(q.get(k)); if (!isNaN(v)) P[k] = v; }
   }
-  [['db','inDb'],['cb','inCb'],['dm','inDm'],['cm','inCm']].forEach(([k,id]) => { if (q.has(k)) document.getElementById(id).value = q.get(k); });
+  if (q.has('d')) document.getElementById('inD').value = q.get('d');
+  if (q.has('c')) document.getElementById('inC').value = q.get('c');
 
   const $ = id => document.getElementById(id);
   const fmtUF  = n => n.toLocaleString('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -299,11 +276,11 @@
 
   function ufActual(){ return (P.uf && P.uf > 0) ? P.uf : (ufLive ? ufLive.valor : UF_FALLBACK.valor); }
 
-  // segs: [{D, C}, ...] — un elemento por nivel (básica, media)
-  function calc(segs){
-    const D = segs.reduce((a,s) => a + s.D, 0);
-    const DC = segs.reduce((a,s) => a + s.D * s.C, 0);          // clases observadas
-    const M = P.mat ? segs.reduce((a,s) => a + (s.C > 0 ? s.D : 0), 0) : 0;
+  // D docentes (un curso cada una), C ciclos de codocencia por docente.
+  // La codocencia incluye el material didáctico (uno por docente) y la retroalimentación.
+  function calc(D, C){
+    const DC = D * C;                       // clases observadas
+    const M = C > 0 ? D : 0;                // materiales: uno por docente con codocencia
     const hAula = P.hca * DC;
     const hFuera = P.hb + P.hd * D + P.hcf * DC + P.hm * M;
     const horas = hFuera + hAula;
@@ -324,39 +301,32 @@
     if (el.textContent !== txt){ el.textContent = txt; el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
   }
 
-  function summaryParts(b, m, r){
+  function summaryParts(r){
     const parts = [];
-    const d = [];
-    if (b.D) d.push(`${b.D} de básica`);
-    if (m.D) d.push(`${m.D} de media`);
-    parts.push(`${r.D} docente${r.D!==1?'s':''}` + (d.length ? ` (${d.join(' y ')})` : ''));
+    parts.push(`${r.D} docente${r.D!==1?'s':''} · ${r.D} curso${r.D!==1?'s':''} de implementación`);
     parts.push(r.DC===0 ? 'sin codocencia' : `${r.DC} clase${r.DC>1?'s':''} observada${r.DC>1?'s':''} en total`);
     if (r.M) parts.push(`${r.M} material${r.M>1?'es':''} didáctico${r.M>1?'s':''}`);
     return parts;
   }
 
   function render(){
-    const b = { D: clamp($('inDb')), C: clamp($('inCb')) };
-    const m = { D: clamp($('inDm')), C: clamp($('inCm')) };
-    if (b.D + m.D === 0) { b.D = 1; $('inDb').value = 1; }   // al menos una docente
-    const r = calc([b, m]);
+    const D = clamp($('inD'));
+    const C = clamp($('inC'));
+    const r = calc(D, C);
     setTot('rH', fmtH(r.horas) + ' h');
     setTot('rUF', fmtUF(r.uf) + ' UF');
     setTot('rCLP', fmtCLP(r.clp));
-    const lblC = [];
-    if (b.D) lblC.push(`básica ${b.C} ciclo${b.C!==1?'s':''}`);
-    if (m.D) lblC.push(`media ${m.C} ciclo${m.C!==1?'s':''}`);
-    $('resLbl').textContent = r.DC === 0 ? 'Proyecto completo · sin codocencia' : `Proyecto completo · ${lblC.join(' · ')}`;
+    $('resLbl').textContent = C === 0 ? 'Proyecto completo · sin codocencia' : `Proyecto completo · con codocencia, ${C} ciclo${C>1?'s':''} por docente`;
 
     const sum = $('rSum'); sum.textContent = '';
-    summaryParts(b, m, r).forEach((t, i) => {
+    summaryParts(r).forEach((t, i) => {
       if (i) sum.appendChild(document.createTextNode(' · '));
       const b = document.createElement('b'); b.textContent = t; sum.appendChild(b);
     });
     sum.appendChild(document.createTextNode(` · equivale a ${fmtH(r.horas/11)} h de asesora por semana en 11 semanas.`));
-    $('matNote').textContent = P.mat ? 'Con codocencia se incluye un material didáctico (concreto, pictórico y simbólico) por docente.' : '';
+    $('matNote').textContent = C > 0 ? 'La codocencia incluye, por docente, el material didáctico (concreto, pictórico y simbólico) de su curso y la retroalimentación previa y posterior a la clase observada.' : '';
 
-    const pa = calc([{D:2,C:0},{D:1,C:0}]), pb = calc([{D:2,C:1},{D:1,C:1}]);
+    const pa = calc(3,0), pb = calc(3,1);
     $('pA-h').textContent  = fmtH(pa.horas)+' h';  $('pA-uf').textContent = fmtUF(pa.uf)+' UF';  $('pA-clp').textContent = fmtCLP(pa.clp);
     $('pB-h').textContent  = fmtH(pb.horas)+' h';  $('pB-uf').textContent = fmtUF(pb.uf)+' UF';  $('pB-clp').textContent = fmtCLP(pb.clp);
 
@@ -373,15 +343,14 @@
     el.value = (parseInt(el.value,10)||0) + parseInt(btn.dataset.dir,10);
     render();
   }));
-  ['inDb','inCb','inDm','inCm'].forEach(id => { $(id).addEventListener('input', render); $(id).addEventListener('change', render); });
+  ['inD','inC'].forEach(id => { $(id).addEventListener('input', render); $(id).addEventListener('change', render); });
 
   // ---- Panel del oferente ----
   const panel = $('oferente');
   function fillPanel(){
     document.querySelectorAll('.params [data-key]').forEach(inp => {
       const k = inp.dataset.key;
-      if (inp.type === 'checkbox') inp.checked = !!P[k];
-      else inp.value = (P[k] === null || P[k] === undefined) ? '' : P[k];
+      inp.value = (P[k] === null || P[k] === undefined) ? '' : P[k];
     });
   }
   $('toggleOf').addEventListener('click', () => {
@@ -390,8 +359,7 @@
   });
   document.querySelectorAll('.params [data-key]').forEach(inp => inp.addEventListener('input', () => {
     const k = inp.dataset.key;
-    if (inp.type === 'checkbox') P[k] = inp.checked ? 1 : 0;
-    else { const v = parseFloat(inp.value); P[k] = isNaN(v) ? (k==='uf' ? null : DEFAULTS[k]) : v; }
+    const v = parseFloat(inp.value); P[k] = isNaN(v) ? (k==='uf' ? null : DEFAULTS[k]) : v;
     render();
   }));
   $('btnReset').addEventListener('click', () => { Object.assign(P, DEFAULTS); fillPanel(); render(); toast('Valores de la propuesta restaurados'); });
