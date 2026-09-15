@@ -90,10 +90,10 @@
     repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 2px, transparent 2px 14px)}
   .results > *{position:relative}
   .results .lbl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d8c9ad;font-weight:600}
-  .totals{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:14px;margin-top:10px}
+  .totals{display:grid;grid-template-columns:1fr 1.15fr 1.45fr;gap:14px;margin-top:10px}
   @media (max-width:520px){.totals{grid-template-columns:1fr}}
   .tot small{display:block;font-size:12px;color:#c9d3db;letter-spacing:.06em;text-transform:uppercase}
-  .tot b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(28px,4.2vw,42px);line-height:1.1;letter-spacing:-.01em}
+  .tot b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);line-height:1.1;letter-spacing:-.01em;white-space:nowrap}
   .tot b.pulse{animation:pulse .45s}
   .tot.money b{color:#f3d9a8}
   .summary{margin:14px 24px 0;font-size:14px;color:var(--ink-2)}
@@ -258,7 +258,7 @@
   const DEFAULTS = { uf:null, tf:1.5, ta:2.0, hb:22.5, hd:3.0, hcf:8.5, hca:2.0, hm:4.0, mat:1 };
   const UF_FALLBACK = { valor:40934.58, fecha:'15-09-2026' }; // mindicador.cl
   const P = {...DEFAULTS};
-  let ufLive = null;
+  let ufLive = null, ufFailed = false;
 
   // ---- Parámetros desde el enlace ----
   const q = new URLSearchParams(location.search);
@@ -331,7 +331,7 @@
     $('ufValue').textContent = fmtCLP(u).replace('$','$ ');
     $('ufDate').textContent =
       (P.uf && P.uf>0) ? 'fijado por el oferente' :
-      (ufLive ? `UF del ${ufLive.fecha} · Banco Central vía mindicador.cl` : `UF del ${UF_FALLBACK.fecha} · no se pudo actualizar en línea`);
+      (ufLive ? `UF del ${ufLive.fecha} · Banco Central vía mindicador.cl` : (ufFailed ? `UF del ${UF_FALLBACK.fecha} · no se pudo actualizar en línea` : `UF del ${UF_FALLBACK.fecha} · actualizando…`));
   }
 
   // ---- Controles del colegio ----
@@ -376,10 +376,12 @@
 
   // ---- UF del día ----
   render();
-  fetch('https://mindicador.cl/api/uf', {cache:'no-store'})
+  const ac = new AbortController(); const tm = setTimeout(() => ac.abort(), 8000);
+  fetch('https://mindicador.cl/api/uf', {cache:'no-store', signal:ac.signal})
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(j => { const s = j && j.serie && j.serie[0]; if (s && s.valor > 0) { ufLive = { valor:s.valor, fecha:s.fecha.slice(0,10).split('-').reverse().join('-') }; render(); } })
-    .catch(() => {});
+    .then(j => { const s = j && j.serie && j.serie[0]; if (s && s.valor > 0) { ufLive = { valor:s.valor, fecha:s.fecha.slice(0,10).split('-').reverse().join('-') }; } else { ufFailed = true; } })
+    .catch(() => { ufFailed = true; })
+    .finally(() => { clearTimeout(tm); render(); });
 })();
 </script>
 </body>
