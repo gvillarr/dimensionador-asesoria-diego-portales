@@ -28,10 +28,10 @@
   }
   body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .wrap{max-width:1240px;margin:0 auto;padding:22px 22px 30px;position:relative}
+  .wrap{max-width:1280px;margin:0 auto;padding:18px 22px 24px;position:relative}
 
   /* ---- cabecera compacta ---- */
-  header{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin-bottom:14px;animation:rise .6s both}
+  header{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin-bottom:12px;animation:rise .6s both}
   .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ochre-2);font-weight:600;margin:0 0 4px}
   h1{font-family:var(--serif);font-weight:400;font-variation-settings:"SOFT" 60,"opsz" 120;font-size:clamp(26px,3.2vw,36px);line-height:1.05;margin:0;letter-spacing:-.01em;color:var(--navy-2)}
   h1 em{font-style:italic;color:var(--ochre)}
@@ -40,7 +40,7 @@
   .uf-badge b{display:block;font-family:var(--serif);font-size:20px;color:var(--navy);font-weight:500}
 
   /* ---- barra de decisiones ---- */
-  .bar{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:stretch;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;margin-bottom:16px;animation:rise .6s .08s both}
+  .bar{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:stretch;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 14px;margin-bottom:12px;animation:rise .6s .08s both}
   .ctl{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:6px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
   .ctl label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
   .ctl .desc{font-size:12px;color:var(--ink-2);margin:2px 0 0}
@@ -60,13 +60,13 @@
   .card .hd{padding:12px 16px 8px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   .card h2{font-family:var(--serif);font-weight:500;font-size:19px;margin:0;color:var(--navy-2)}
   .tag{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre-2);border:1px solid var(--ochre);border-radius:999px;padding:1px 8px;font-weight:600}
-  .card .sub{margin:0;padding:0 16px 8px;color:var(--ink-2);font-size:12.5px}
+  .card .sub{margin:0;padding:0 16px 6px;color:var(--ink-2);font-size:12px}
 
   table.items{width:100%;border-collapse:collapse;font-size:12.5px}
   .items th{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:700;text-align:left;padding:5px 8px 5px 16px;border-bottom:1px solid var(--navy);background:var(--paper)}
   .items th.num,.items td.num{text-align:right;white-space:nowrap;padding-right:16px;padding-left:8px;width:112px}
   .items th.you,.items td.you{background:rgba(200,134,43,.08)}
-  .items td{padding:4px 8px 4px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  .items td{padding:5px 8px 5px 16px;border-bottom:1px solid var(--line);vertical-align:top}
   .items tr.grp td{font-family:var(--serif);font-size:13px;color:var(--navy);padding-top:8px;border-bottom:1px solid var(--navy);background:transparent}
   .items td.zero{color:#9aa4ad}
   .items tfoot td{border-bottom:0;padding:6px 8px 6px 16px}
@@ -191,17 +191,17 @@
   // ---------- Modelo: ítems de la propuesta (septiembre 2026) ----------
   // h = horas por unidad; qty(D,C) = unidades; aula = se cobra a tarifa de aula.
   const ITEMS = [
-    { id:'coord', grp:'base', label:'Coordinación con equipo directivo / UTP (reunión inicial, seguimientos y cierre)', h:6.5, qty:()=>1 },
-    { id:'tall',  grp:'base', label:'Talleres de formación didáctica (COPISI, Polya, cálculo mental, TSD, diseño de tareas, cierre)', h:2.0, qty:()=>6 },
-    { id:'ruta',  grp:'base', label:'Rutas de aprendizaje con tareas matemáticas, una por docente/curso', h:2.0, qty:D=>D },
-    { id:'ajus',  grp:'base', label:'Retroalimentación y ajuste de las rutas según resultados DIA', h:1.0, qty:D=>D },
-    { id:'info',  grp:'base', label:'Informes de avance (noviembre) y final (diciembre)', h:2.0, qty:()=>2 },
+    { id:'coord', grp:'base', label:'Coordinación con equipo directivo / UTP (4 reuniones)', h:6.5, qty:()=>1 },
+    { id:'tall',  grp:'base', label:'Talleres de formación didáctica (6 talleres)', h:2.0, qty:()=>6 },
+    { id:'ruta',  grp:'base', label:'Rutas de aprendizaje, una por docente/curso', h:2.0, qty:D=>D },
+    { id:'ajus',  grp:'base', label:'Ajuste de las rutas según resultados DIA', h:1.0, qty:D=>D },
+    { id:'info',  grp:'base', label:'Informes de avance y final', h:2.0, qty:()=>2 },
     { id:'plan',  grp:'codo', label:'Reunión de planificación de la clase', h:1.5, qty:(D,C)=>D*C },
-    { id:'r1',    grp:'codo', label:'Retroalimentación de la primera versión de la tarea', h:1.5, qty:(D,C)=>D*C },
-    { id:'r2',    grp:'codo', label:'Retroalimentación de la segunda versión de la tarea', h:1.0, qty:(D,C)=>D*C },
+    { id:'r1',    grp:'codo', label:'Retroalimentación 1ª versión de la tarea', h:1.5, qty:(D,C)=>D*C },
+    { id:'r2',    grp:'codo', label:'Retroalimentación 2ª versión de la tarea', h:1.0, qty:(D,C)=>D*C },
     { id:'aula',  grp:'codo', label:'Implementación y observación conjunta en aula', h:2.0, qty:(D,C)=>D*C, aula:true },
     { id:'post',  grp:'codo', label:'Retroalimentación posterior (incluye preparación)', h:4.5, qty:(D,C)=>D*C },
-    { id:'mat',   grp:'codo', label:'Material didáctico concreto, pictórico y simbólico, uno por docente con codocencia', h:4.0, qty:(D,C)=>C>0?D:0 },
+    { id:'mat',   grp:'codo', label:'Material didáctico (concreto, pictórico, simbólico), uno por docente', h:4.0, qty:(D,C)=>C>0?D:0 },
   ];
   const DEFAULTS = { uf:null, tf:1.5, ta:2.0 };
   ITEMS.forEach(it => DEFAULTS['h_'+it.id] = it.h);
@@ -220,10 +220,11 @@
   const fmtCLP = n => '$' + Math.round(n).toLocaleString('es-CL');
   const ufActual = () => (P.uf && P.uf > 0) ? P.uf : (ufLive ? ufLive.valor : UF_FALLBACK.valor);
 
-  function hoursOf(it, D, C){ return P['h_'+it.id] * it.qty(D, C); }
+  function hoursOf(it, D, C){ return it.sum ? it.sum.reduce((a,x) => a + hoursOf(x, D, C), 0) : P['h_'+it.id] * it.qty(D, C); }
+  function ufOf(it, D, C){ return it.sum ? it.sum.reduce((a,x) => a + ufOf(x, D, C), 0) : hoursOf(it, D, C) * (it.aula ? P.ta : P.tf); }
   function totals(items, D, C){
     let horas = 0, uf = 0;
-    items.forEach(it => { const h = hoursOf(it, D, C); horas += h; uf += h * (it.aula ? P.ta : P.tf); });
+    items.forEach(it => { horas += hoursOf(it, D, C); uf += ufOf(it, D, C); });
     return { horas, uf, clp: uf * ufActual() };
   }
 
@@ -237,7 +238,8 @@
     const tbody = el('tbody'); let lastGrp = null;
     items.forEach(it => {
       if (withGroups && it.grp !== lastGrp) {
-        const g = el('tr', 'grp'); const td = el('td', null, it.grp === 'base' ? 'Formación, planificación e informes' : 'Codocencia · por docente y ciclo'); td.colSpan = 3; g.append(td); tbody.append(g); lastGrp = it.grp;
+        if (it.grp === 'codo') { const g = el('tr', 'grp'); const td = el('td', null, 'Codocencia · por docente y ciclo'); td.colSpan = 3; g.append(td); tbody.append(g); }
+        lastGrp = it.grp;
       }
       const tr = el('tr'); tr.dataset.id = it.id;
       tr.append(el('td', null, it.label), el('td', 'num ref'), el('td', 'num you'));
@@ -250,7 +252,8 @@
     const rP = el('tr', 'money'); rP.append(el('td', 'lbl', 'Valor en pesos'), el('td', 'num ref'), el('td', 'num you')); tfoot.append(rP);
     table.append(tfoot);
   }
-  const P1 = ITEMS.filter(it => it.grp === 'base'), P2 = ITEMS;
+  const P1 = ITEMS.filter(it => it.grp === 'base');
+  const P2 = [{ id:'p1', grp:'base', label:'Todo lo de la Propuesta 1 (formación, rutas e informes)', sum:P1 }, ...ITEMS.filter(it => it.grp === 'codo')];
   buildTable($('t1'), P1, false);
   buildTable($('t2'), P2, true);
 
